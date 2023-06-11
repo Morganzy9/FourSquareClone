@@ -32,9 +32,9 @@ class PlacesVC: UIViewController {
         tableView.delegate = self
 
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(logOutButtonClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonclicked))
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: UIBarButtonItem.Style.plain, target: self, action:  #selector(addButtonclicked))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: UIBarButtonItem.Style.plain, target: self, action:  #selector(logOutButtonClicked))
         
         
         
@@ -79,6 +79,8 @@ class PlacesVC: UIViewController {
     
     @objc func addButtonclicked() {
         
+        performSegue(withIdentifier: "toAddVC", sender: nil)
+        
     }
 
     
@@ -103,7 +105,7 @@ extension PlacesVC: UITableViewDelegate {
 
         var content = cell.defaultContentConfiguration()
 
-
+        
 
 
         cell.contentConfiguration = content
