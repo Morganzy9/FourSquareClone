@@ -87,8 +87,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //setUpView()
-        hideKeyboard()
+        setUpView()
         
         
     }
@@ -169,8 +168,8 @@ class ViewController: UIViewController {
 //    MARK: SetUpView
     
     func setUpView() {
-        
-        
+            
+        view.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(hideKeyboard)))
         
         
         
@@ -188,9 +187,9 @@ class ViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    func hideKeyboard() {
+    @objc func hideKeyboard() {
         
-        
+        view.endEditing(true)
         
     }
     
