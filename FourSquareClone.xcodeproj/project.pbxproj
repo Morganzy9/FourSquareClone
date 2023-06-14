@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16251D0E2A39CD4E00572846 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16251D0D2A39CD4D00572846 /* PlaceModel.swift */; };
 		16C617C22A378C1C00F42505 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16C617C12A378C1C00F42505 /* Main.storyboard */; };
 		16C617C62A378C6900F42505 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C617C32A378C6900F42505 /* DetailVC.swift */; };
 		16C617C72A378C6900F42505 /* SelectLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C617C42A378C6900F42505 /* SelectLocationVC.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16251D0D2A39CD4D00572846 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		16C617C12A378C1C00F42505 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		16C617C32A378C6900F42505 /* DetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		16C617C42A378C6900F42505 /* SelectLocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectLocationVC.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				16FBF90A2A34CD4000D91978 /* User.swift */,
+				16251D0D2A39CD4D00572846 /* PlaceModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -106,8 +109,8 @@
 				16FBF8EE2A3481F000D91978 /* ViewController.swift */,
 				16FBF8FE2A34CA7800D91978 /* PlacesVC.swift */,
 				16C617C52A378C6900F42505 /* AddPlaceVC.swift */,
-				16C617C32A378C6900F42505 /* DetailVC.swift */,
 				16C617C42A378C6900F42505 /* SelectLocationVC.swift */,
+				16C617C32A378C6900F42505 /* DetailVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				16FBF8FF2A34CA7800D91978 /* PlacesVC.swift in Sources */,
 				16FBF90B2A34CD4000D91978 /* User.swift in Sources */,
 				16FBF8ED2A3481F000D91978 /* SceneDelegate.swift in Sources */,
+				16251D0E2A39CD4E00572846 /* PlaceModel.swift in Sources */,
 				16C617C62A378C6900F42505 /* DetailVC.swift in Sources */,
 				16C617C72A378C6900F42505 /* SelectLocationVC.swift in Sources */,
 			);

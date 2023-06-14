@@ -314,10 +314,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="kVk-c8-JL9"/>
                     <connections>
+                        <outlet property="choosenImage" destination="Qs3-5k-FlR" id="Doe-XZ-9oh"/>
                         <outlet property="placeAtmosphereTextField" destination="Ppk-XA-HSc" id="hSQ-DF-0Fd"/>
                         <outlet property="placeNameTextField" destination="qgO-6Q-myl" id="e6g-Pj-uh7"/>
-                        <outlet property="placeTyprTextField" destination="28k-0u-tZH" id="eUR-cw-saR"/>
-                        <outlet property="uploadIMageView" destination="Qs3-5k-FlR" id="Doe-XZ-9oh"/>
+                        <outlet property="placeTypeTextField" destination="28k-0u-tZH" id="eUR-cw-saR"/>
                         <segue destination="JHd-Km-5Lo" kind="show" identifier="toSelectLocation" id="Zcm-hB-NA4"/>
                     </connections>
                 </viewController>

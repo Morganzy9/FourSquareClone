@@ -16,6 +16,8 @@ class SelectLocationVC: UIViewController {
 
     @IBOutlet var mapView: MKMapView!
     
+    let locationManager = CLLocationManager()
+    
 //    MARK: - viewDidLoad
     
     override func viewDidLoad() {
@@ -31,8 +33,9 @@ class SelectLocationVC: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: self, action: #selector(savePlace))
         
-        setUpLocation()
+        mapDelegate()
         
+        setUpLocation()
         
         
     }
@@ -49,11 +52,47 @@ class SelectLocationVC: UIViewController {
 
 //  MARK: - Extension`s
 
+extension SelectLocationVC: MKMapViewDelegate {
+
+    func mapDelegate() {
+        
+        mapView.delegate = self
+        
+    }
+
+
+}
+
 extension SelectLocationVC: CLLocationManagerDelegate {
+    
+    
     
     
     func setUpLocation() {
         
+        locationManager.delegate = self
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        locationManager.requestWhenInUseAuthorization()
+        
+        locationManager.startUpdatingLocation()
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        locationManager.startUpdatingLocation()
+        
+        let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
+        
+//        Zoom level defines span values
+        
+        let span = MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
+        
+        let region = MKCoordinateRegion(center: location, span: span)
+        
+        mapView.setRegion(region, animated: true)
         
     }
     

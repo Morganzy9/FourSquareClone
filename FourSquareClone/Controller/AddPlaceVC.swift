@@ -11,41 +11,41 @@ import PhotosUI
 
 class AddPlaceVC: UIViewController {
     
-//    MARK: - @IBOutlet`s
-
+    //    MARK: - @IBOutlet`s
+    
     @IBOutlet var placeNameTextField: UITextField!
     
-    @IBOutlet var placeTyprTextField: UITextField!
+    @IBOutlet var placeTypeTextField: UITextField!
     
     
     @IBOutlet var placeAtmosphereTextField: UITextField!
     
-    @IBOutlet var uploadIMageView: UIImageView!
+    @IBOutlet var choosenImage: UIImageView!
     
-//    MARK: - viewDidLoad
+    //    MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setUpView()
         
         
     }
     
-//    MARK: - Functions
+    //    MARK: - Functions
     
     func setUpView() {
         
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.camera, target: self, action: #selector(presentPhotoLibrary))
+        //        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.camera, target: self, action: #selector(presentPhotoLibrary))
         
         
         
-        uploadIMageView.isUserInteractionEnabled = true
+        choosenImage.isUserInteractionEnabled = true
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentPhotoLibrary))
-
-        uploadIMageView.addGestureRecognizer(gestureRecognizer)
-
+        
+        choosenImage.addGestureRecognizer(gestureRecognizer)
+        
         
     }
     
@@ -63,16 +63,44 @@ class AddPlaceVC: UIViewController {
     }
     
     
-//    MARK: - @IBAction`s
+    //    MARK: - @IBAction`s
     
     @IBAction func nextButtonClicked(_ sender: Any) {
         
+        if placeNameTextField.text != "" && placeTypeTextField.text != "" && placeAtmosphereTextField.text != "" {
+
+            if let uploadedImage = choosenImage.image {
+                
+                let placeModel = PlaceModel.sharedInstance
+                
+                placeModel.placeName = placeNameTextField.text!
+                placeModel.placetype = placeTypeTextField.text!
+                placeModel.placeAtmosphere = placeAtmosphereTextField.text!
+                placeModel.image = uploadedImage
+                
+            }
+            
             performSegue(withIdentifier: "toSelectLocation", sender: nil)
+
+            
+        } else {
+            
+            let alert = UIAlertController(title: "Error", message: "Missing Place Name/Type/Atmosphere", preferredStyle: UIAlertController.Style.alert)
+            
+            let okButton = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default)
+            
+            alert.addAction(okButton)
+            
+            present(alert, animated: true)
+            
+        }
+        
+        
         
     }
     
     
-
+    
 }
 
 //  MARK: - Extension`s
@@ -80,7 +108,7 @@ class AddPlaceVC: UIViewController {
 extension AddPlaceVC: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            
+        
         
         
         for item in results {
@@ -95,7 +123,7 @@ extension AddPlaceVC: PHPickerViewControllerDelegate {
                 }
                 
                 DispatchQueue.main.async {
-                    self.uploadIMageView.image = image
+                    self.choosenImage.image = image
                 }
                 
             }
