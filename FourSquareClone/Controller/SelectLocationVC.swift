@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import Parse
 
 
 
@@ -18,8 +19,6 @@ class SelectLocationVC: UIViewController {
     
     let locationManager = CLLocationManager()
     
-    var chooseLatitude = ""
-    var chooseLongitude = ""
     
 //    MARK: - viewDidLoad
     
@@ -45,8 +44,47 @@ class SelectLocationVC: UIViewController {
     
     @objc func savePlace() {
         
+        let placeModel = PlaceModel.sharedInstance
+        
+        let object = PFObject(className: "Places")
+        
+        let uuid = UUID().uuidString
         
         
+        object["name"] = placeModel.placeName
+        object["type"] = placeModel.placetype
+        object["atmosphere"] = placeModel.placeAtmosphere
+        object["latitude"] = placeModel.placeLatitude
+        object["longitude"] = placeModel.placeLongitude
+        
+        guard let imageData = placeModel.image.jpegData(compressionQuality: 0.5) else {
+            
+            print("Error in ImageData")
+            
+            return
+        }
+        
+        object["image"] = PFFileObject(name: "\(uuid).jpeg",data: imageData)
+        
+        object.saveInBackground { success, Error in
+            
+            if Error != nil {
+                
+                let alert = UIAlertController(title: "Error", message: Error?.localizedDescription ?? "Unknown Error", preferredStyle: UIAlertController.Style.alert)
+                
+                let ok = UIAlertAction(title: "Ok", style: UIAlertAction.Style.default)
+                
+                alert.addAction(ok)
+                
+                self.present(alert, animated: true)
+                
+            } else {
+                
+                self.performSegue(withIdentifier: "fromSelectLocationVCtoPlacesVC", sender: nil)
+                
+            }
+            
+        }
     }
 
     
@@ -104,8 +142,8 @@ extension SelectLocationVC: CLLocationManagerDelegate {
             annotation.title = placeModel.placeName
             annotation.subtitle = placeModel.placetype
             
-            chooseLatitude = String(coordinates.latitude)
-            chooseLongitude = String(coordinates.longitude)
+            placeModel.placeLatitude = String(coordinates.latitude)
+            placeModel.placeLongitude = String(coordinates.longitude)
             
             mapView.addAnnotation(annotation)
             
