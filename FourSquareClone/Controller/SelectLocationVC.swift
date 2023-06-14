@@ -18,6 +18,9 @@ class SelectLocationVC: UIViewController {
     
     let locationManager = CLLocationManager()
     
+    var chooseLatitude = ""
+    var chooseLongitude = ""
+    
 //    MARK: - viewDidLoad
     
     override func viewDidLoad() {
@@ -78,7 +81,38 @@ extension SelectLocationVC: CLLocationManagerDelegate {
         
         locationManager.startUpdatingLocation()
         
+        let makePinRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(choosenLocation(gestureRecognizer: ) ))
+        makePinRecognizer.minimumPressDuration = 2
+        
+        mapView.addGestureRecognizer(makePinRecognizer)
+        
     }
+    
+    @objc func choosenLocation(gestureRecognizer: UIGestureRecognizer) {
+        
+        let placeModel = PlaceModel.sharedInstance
+        
+        if gestureRecognizer.state == UIGestureRecognizer.State.began {
+            
+            let touches = gestureRecognizer.location(in: self.mapView)
+            
+            let coordinates = self.mapView.convert(touches, toCoordinateFrom: self.mapView)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinates
+            
+            annotation.title = placeModel.placeName
+            annotation.subtitle = placeModel.placetype
+            
+            chooseLatitude = String(coordinates.latitude)
+            chooseLongitude = String(coordinates.longitude)
+            
+            mapView.addAnnotation(annotation)
+            
+        }
+        
+    }
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
@@ -88,7 +122,7 @@ extension SelectLocationVC: CLLocationManagerDelegate {
         
 //        Zoom level defines span values
         
-        let span = MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
+        let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
         
         let region = MKCoordinateRegion(center: location, span: span)
         
