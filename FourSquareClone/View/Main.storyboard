@@ -118,8 +118,6 @@
                     <navigationItem key="navigationItem" id="1eR-hh-9FH"/>
                     <connections>
                         <outlet property="passwordTextField" destination="BwY-Su-I96" id="MUW-Pp-ohk"/>
-                        <outlet property="signInButton" destination="8N8-G6-Jhh" id="j9C-l6-x4n"/>
-                        <outlet property="signUpButton" destination="Qdi-cg-Vot" id="YgX-CI-bAD"/>
                         <outlet property="userNameTextField" destination="qG5-X6-8Y8" id="hDO-P5-O8L"/>
                         <segue destination="D13-PS-4ZV" kind="presentation" identifier="toPlacesVC" modalPresentationStyle="fullScreen" id="mGx-h6-4eg"/>
                     </connections>

@@ -41,8 +41,10 @@ class AddPlaceVC: UIViewController {
         
         
         uploadIMageView.isUserInteractionEnabled = true
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(presentPhotoLibrary))
 
-        uploadIMageView.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(presentPhotoLibrary)))
+        uploadIMageView.addGestureRecognizer(gestureRecognizer)
 
         
     }
@@ -79,7 +81,7 @@ extension AddPlaceVC: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             
-        dismiss(animated: true, completion: nil)
+        
         
         for item in results {
             
@@ -99,6 +101,8 @@ extension AddPlaceVC: PHPickerViewControllerDelegate {
             }
             
         }
+        
+        dismiss(animated: true, completion: nil)
         
         
     }

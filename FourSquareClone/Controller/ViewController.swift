@@ -80,8 +80,6 @@ class ViewController: UIViewController {
     @IBOutlet var userNameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     
-    @IBOutlet var signInButton: UIButton!
-    @IBOutlet var signUpButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -92,10 +90,8 @@ class ViewController: UIViewController {
         
     }
     
-//    MARK: - Actions
-    
-    
-    
+//    MARK: - @IBAction
+
     @IBAction func signInButtonClicked(_ sender: Any) {
     
         if userNameTextField.text != "" && passwordTextField.text != "" {
@@ -109,8 +105,6 @@ class ViewController: UIViewController {
                 } else {
                     
                     self.performSegue(withIdentifier: "toPlacesVC", sender: nil)
-                    
-                    
                     
                 }
                 
