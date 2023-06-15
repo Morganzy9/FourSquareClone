@@ -14,6 +14,8 @@ class PlacesVC: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
+    var placeNameArray = [String]()
+    var placeIdArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +38,86 @@ class PlacesVC: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: UIBarButtonItem.Style.plain, target: self, action:  #selector(logOutButtonClicked))
         
+        getDataFromParse()
         
         
         
+    }
+    /*
+    func getDataFromParse() {
+        let query = PFQuery(className: "Places")
         
+        query.findObjectsInBackground { objects, error in
+            if let error = error {
+                self.makeAlert(title: "Error", message: error.localizedDescription )
+            } else {
+                guard let objects = objects else {
+                    print("Error in Objects")
+                    return
+                }
+                
+                self.placeNameArray.removeAll(keepingCapacity: false)
+                self.placeId.removeAll(keepingCapacity: false)
+                
+                for object in objects {
+                    if let name = object.object(forKey: "name") as? String,
+                       let placeId = object.objectId as? String {
+                        self.placeNameArray.append(name)
+                        self.placeId.append(placeId)
+                    }
+                }
+                
+                self.tableView.reloadData()
+            }
+        }
+    }
+*/
+    
+    func getDataFromParse() {
+
+        let query = PFQuery(className: "Places")
+
+        query.findObjectsInBackground { objects, error in
+
+            if let  error = error {
+
+                self.makeAlert(title: "Error", message: error.localizedDescription)
+
+            } else {
+
+                guard let objects = objects else {
+
+                    print("Error in Objects")
+
+                    return
+                }
+
+                self.placeNameArray.removeAll(keepingCapacity: false)
+                self.placeIdArray.removeAll(keepingCapacity: false)
+
+                for object in objects {
+                    
+                    guard let name = object.object(forKey: "name") as? String,
+                          let placeId = object.objectId else {
+ 
+                        print("Error in name")
+
+                        return
+                    }
+
+                    self.placeNameArray.append(name)
+                    self.placeIdArray.append(placeId)
+                    
+                }
+                
+                
+
+                self.tableView.reloadData()
+
+            }
+
+        }
+
     }
     
     func makeAlert(title: String, message: String) {
@@ -96,7 +174,7 @@ extension PlacesVC: UITableViewDataSource {
 extension PlacesVC: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return placeNameArray.count
     }
 
 
@@ -104,9 +182,8 @@ extension PlacesVC: UITableViewDelegate {
         let cell = UITableViewCell()
 
         var content = cell.defaultContentConfiguration()
-
         
-
+        content.text = placeNameArray[indexPath.row]
 
         cell.contentConfiguration = content
         return cell
