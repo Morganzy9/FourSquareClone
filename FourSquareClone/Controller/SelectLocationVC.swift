@@ -15,10 +15,13 @@ class SelectLocationVC: UIViewController {
     
 //    MARK: - @IBOutlet`s
 
+    
     @IBOutlet var mapView: MKMapView!
     
-    let locationManager = CLLocationManager()
     
+//    MARK: - Variables
+    
+    let locationManager = CLLocationManager()
     
 //    MARK: - viewDidLoad
     
@@ -33,12 +36,19 @@ class SelectLocationVC: UIViewController {
     
     func setUpView() {
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "< Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(backButton))
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: self, action: #selector(savePlace))
         
         mapDelegate()
-        
         setUpLocation()
         
+        
+    }
+    
+    @objc func backButton() {
+        
+        self.dismiss(animated: true)
         
     }
     

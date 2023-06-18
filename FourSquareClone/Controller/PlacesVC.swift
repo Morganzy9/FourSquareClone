@@ -14,8 +14,13 @@ class PlacesVC: UIViewController {
 
     @IBOutlet var tableView: UITableView!
     
+//    MARK: - Variables
+    
     var placeNameArray = [String]()
     var placeIdArray = [String]()
+    
+    var selectedPlaceId = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,35 +48,6 @@ class PlacesVC: UIViewController {
         
         
     }
-    /*
-    func getDataFromParse() {
-        let query = PFQuery(className: "Places")
-        
-        query.findObjectsInBackground { objects, error in
-            if let error = error {
-                self.makeAlert(title: "Error", message: error.localizedDescription )
-            } else {
-                guard let objects = objects else {
-                    print("Error in Objects")
-                    return
-                }
-                
-                self.placeNameArray.removeAll(keepingCapacity: false)
-                self.placeId.removeAll(keepingCapacity: false)
-                
-                for object in objects {
-                    if let name = object.object(forKey: "name") as? String,
-                       let placeId = object.objectId as? String {
-                        self.placeNameArray.append(name)
-                        self.placeId.append(placeId)
-                    }
-                }
-                
-                self.tableView.reloadData()
-            }
-        }
-    }
-*/
     
     func getDataFromParse() {
 
@@ -187,6 +163,28 @@ extension PlacesVC: UITableViewDelegate {
 
         cell.contentConfiguration = content
         return cell
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "toDetailsVC" {
+            
+            let detinationVC = segue.destination as! DetailVC
+            
+            detinationVC.choosenPlaceId = selectedPlaceId
+            
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectedPlaceId = placeIdArray[indexPath.row]
+        
+        
+        
+        self.performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
 
 
