@@ -44,17 +44,10 @@ class DetailVC: UIViewController {
     func setUpView() {
         
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "< Back", style: UIBarButtonItem.Style.done, target: self, action: #selector(backButton))
-        
         settingPlaceType()
         
     }
     
-    @objc func backButton() {
-        
-        navigationController?.popViewController(animated: true)
-        
-    }
     
     func settingPlaceType() {
         
