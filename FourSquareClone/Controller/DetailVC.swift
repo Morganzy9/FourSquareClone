@@ -43,8 +43,10 @@ class DetailVC: UIViewController {
     
     func setUpView() {
         
+        mapView.delegate = self
         
         settingPlaceType()
+        
         
     }
     
@@ -178,8 +180,8 @@ class DetailVC: UIViewController {
                 
                 annotation.coordinate = location
                 
-                annotation.title = self.placeNameLabel.text
-                annotation.subtitle = self.placeTypeLabel.text
+                annotation.title = name
+                annotation.subtitle = type
                 
                 self.mapView.addAnnotation(annotation)
                 
@@ -200,5 +202,81 @@ class DetailVC: UIViewController {
         present(alert, animated: true)
     }
     
+    
+}
+
+extension DetailVC : MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let reuseAnnotationID = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseAnnotationID)
+        
+        if pinView == nil {
+            
+            pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseAnnotationID)
+            
+            pinView?.canShowCallout = true
+            
+            let button = UIButton(type: .detailDisclosure)
+            
+            pinView?.rightCalloutAccessoryView = button
+            
+        } else {
+            pinView?.annotation = annotation
+            
+        }
+        
+        return pinView
+        
+    }
+    
+//    Defines what happens if user taps on button added above
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        if self.placeLatitude != 0.0 && self.placeLongitude != 0.0 {
+            
+            let requestLocation = CLLocation(latitude: self.placeLatitude, longitude: self.placeLongitude)
+            
+            
+            CLGeocoder().reverseGeocodeLocation(requestLocation) { placeMarks, error in
+                
+                guard let placeMark = placeMarks else {
+                    
+                    print("Error in placeMarks CLGeocoder")
+                    
+                    return
+                }
+                
+                guard placeMark.count > 0 else {
+                    
+                    print("Error in placeMArk count")
+                    
+                    return
+                }
+                
+                let mkPlaeMark = MKPlacemark(placemark: placeMark[0])
+                
+                let mapItem = MKMapItem(placemark: mkPlaeMark)
+                
+                mapItem.name = self.placeNameLabel.text
+                
+                
+                let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
+                
+                mapItem.openInMaps(launchOptions: launchOptions)
+                
+                
+            }
+            
+        }
+        
+    }
     
 }
